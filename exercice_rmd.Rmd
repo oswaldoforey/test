@@ -1,0 +1,35 @@
+---
+title: "Exercice rmd"
+author: "Oswaldo"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Objectifs
+
+L'idée serait d'harmoniser tous ces tableaux pour obtenir une structure commune avec seulement quatre colonnes : titre, date, abstract et lien.
+
+Mais avant ça, je voudrais afficher les tableaux un par un dans mon environnement R pour voir ce qu'ils contiennent et mieux comprendre comment les données sont organisées.
+
+Cela me permettra ensuite de sélectionner et d'extraire les informations qui m'intéressent pour le travail terminologique et les analyses NLP : fréquence des mots, thématisation, patrons syntaxiques, cooccurrences, suppression des stop words, etc.
+
+Mon objectif plus tard, est d'aller plus loin en apprenant à exploiter ces résultats pour construire  une ontologie, en identifiant les concepts, les termes clés et les relations entre eux.
+
+L'idée est donc de commencer par structurer et analyser les données, puis de m'appuyer sur ce travail pour aborder la création d'une ontologie.
+
+# Chargement des données
+
+## CorpusDG_SAF
+
+ces données contiennent...
+
+```{r}
+
+
+
+```
+
