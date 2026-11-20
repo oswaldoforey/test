@@ -1,0 +1,122 @@
+---
+title: "Séquence Rmarkdown"
+author: "Oswaldo"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: true
+  html_document:
+    number_sections: true
+    toc: true
+    toc_float: true
+editor_options:
+  chunk_output_type: console
+always_allow_html: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+
+# manipuler et visualiser les données
+library(tidyverse)
+
+# données manchots
+library(palmerpenguins)
+
+# pour améliorer l'esthétique de tableaux dans le rapport
+library(kableExtra)
+
+```
+
+# Paramètres généraux (roue dentée en dessous du nom du script)
+
+- choisir si le rapport contient le code ou non : roue dentée du premier chunk (setup)
+- choisir si les sorties du code s'affichent dans le script (inline) ou dans la console
+
+# Gérer l'affichage des tableaux et des graphiques
+
+## Les tableaux
+
+Voici les données manchots...
+
+### en html et pdf
+
+```{r}
+
+penguins <- penguins |> 
+  filter(species=="Gentoo")
+
+penguins |> 
+  head(n=30) |> 
+  kable(caption = "Tableau 1: les manchots") |> 
+  kable_styling(bootstrap_options = "striped",
+                # pour figer la première ligne
+                fixed_thead = TRUE)
+
+```
+
+Pour coder dans le narratif, on utilise `r `, et on code à l'intérieur. Attention, le code doit vous retourner une valeur unique.
+
+Le tableau contient `r  penguins|> summarise(nb_manchots=n()) |> pull()` manchots.
+
+### en word 
+
+Pour des tableaux destinés à Word, installer au besoin `flextable` avec `install.packages("flextable")` ; ce package est souvent plus adapté. Il produit des tableaux Word éditables et propose de nombreuses options de mise en forme. Le package `officer` peut compléter `flextable` lorsqu'on souhaite contrôler plus finement la construction d'un document Word.
+
+```{r seq25-flextable}
+
+# Tableau Word éditable
+flextable::flextable(penguins) |>
+  flextable::colformat_double(
+    j = "masse_moyenne",
+    digits = 1
+  ) |>
+  flextable::autofit()
+
+```
+
+## Les graphiques
+
+Les arguments pour modifier les graphiques dans le rapport (rien ne se passe dans le chunk quand on exécute le code) doivent être écrits directement sous {r} avec l'opérateur #| suivi d'un espace
+ 
+```{r }
+#| fig.cap="figure 1: les manchots",
+#| fig.height=2,fig.width=3
+
+
+ggplot(data=penguins)+
+  aes(x=bill_length_mm,
+      y=bill_depth_mm,
+      colour=species)+
+  geom_point()+
+  facet_grid(~island)+
+  labs(title="manchots")
+
+
+```
+
+# Exercice
+
+- créer un nouveau document rmd
+- créer une première section 'objectifs' avec le texte suivant dedans:
+
+"L'idée serait d'harmoniser tous ces tableaux pour obtenir une structure commune avec seulement quatre colonnes : titre, date, abstract et lien.
+
+Mais avant ça, je voudrais afficher les tableaux un par un dans mon environnement R pour voir ce qu'ils contiennent et mieux comprendre comment les données sont organisées.
+
+Cela me permettra ensuite de sélectionner et d'extraire les informations qui m'intéressent pour le travail terminologique et les analyses NLP : fréquence des mots, thématisation, patrons syntaxiques, cooccurrences, suppression des stop words, etc.
+
+Mon objectif plus tard, est d'aller plus loin en apprenant à exploiter ces résultats pour construire  une ontologie, en identifiant les concepts, les termes clés et les relations entre eux.
+
+L'idée est donc de commencer par structurer et analyser les données, puis de m'appuyer sur ce travail pour aborder la création d'une ontologie."
+
+- charger successivement dans 4 chunks différents les 4 tableaux et afficher en dessous dans le narratif le texte suivant:
+
+Les noms des colonnes sont #### , les 4 colonnes nécessaires (titre, date, abstract et lien.) sont bien présentes, il faut juste les renommer.
+
+- remplacer les #### par du code pour afficher les noms des colonnes du tableau avec la fonction colnames()
+
