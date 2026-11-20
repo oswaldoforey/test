@@ -1,0 +1,20 @@
+# Fichiers temporaires de R
+.Rhistory
+.RData
+.Ruserdata
+
+# Configuration locale de RStudio
+.Rproj.user/
+
+# Fichiers temporaires de macOS et Windows
+.DS_Store
+Thumbs.db
+
+# Fichiers temporaires de Quarto
+.quarto/
+
+# Site Quarto généré
+_site/
+
+# Fichiers temporaires de compilation
+*.log
